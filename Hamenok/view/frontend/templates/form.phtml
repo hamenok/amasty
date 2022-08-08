@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var Form $block
+ * @var Escaper $escaper;
+ */
+
+use Amasty\Hamenok\Block\Form\Form;
+use Magento\Framework\Escaper;
+
+?>
+
+<div>
+    <form class="<?= $escaper->escapeHtml($block->getForm()) ?>">
+        <label for="sku" class="<?= $escaper->escapeHtml($block->getLabel()) ?>">
+            Артикул
+        </label>
+        <input type="text" name="sku" id="sku" class="<?= $escaper->escapeHtml($block->getInput()) ?>" />
+        <label for="qty" class="<?= $escaper->escapeHtml($block->getLabel()) ?>">
+            Количество
+        </label>
+        <input type="number" name="qty" id="qty" class="<?= $escaper->escapeHtml($block->getInput()) ?>"/>
+        <?= $block->getChildHtml(); ?>
+        <button type="submit" class="<?= $escaper->escapeHtml($block->getBtn()) ?>">
+            Отправить
+        </button>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Amasty_Hamenok::css/main.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="Amasty_Hamenok" htmlTag="div" htmlClass="main-page">
+                <block name="Amasty_Hamenok.hello"
+                       class="Amasty\Hamenok\Block\Hello\Hello"
+                       template="Amasty_Hamenok::hello.phtml">
+                </block>
+                <block name="Amasty_Hamenok.form"
+                       class="Amasty\Hamenok\Block\Form\Form"
+                       template="Amasty_Hamenok::form.phtml">
+                    <arguments>
+                        <argument name="form" xsi:type="string">form</argument>
+                        <argument name="label" xsi:type="string">label</argument>
+                        <argument name="input" xsi:type="string">input-text</argument>
+                        <argument name="btn" xsi:type="string">form__button</argument>
+                    </arguments>
+                    <block name="Amasty_Hamenok.additional"
+                           class="Amasty\Hamenok\Block\Timer\Timer"
+                           template="Amasty_Hamenok::timer.phtml">
+                        <arguments>
+                            <argument name="timer" xsi:type="string">block__timer</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+
+</page>
