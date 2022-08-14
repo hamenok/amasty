@@ -45,7 +45,7 @@ class Add extends Action
             die("Access is denied. Module is disabled");
         } else {
             if (!$this->configProvider->getIsEnabled("general/visible_qty")) {
-                $this->messageManager->addWarningMessage('Поле "Количество" отключено! Товар не может быть добавлен');
+                $this->messageManager->addWarningMessage(__('Поле "Количество" отключено! Товар не может быть добавлен'));
                 return $redirect->setPath("hamenok");
             }
 
@@ -55,7 +55,7 @@ class Add extends Action
             try {
                 $product = $this->productRepository->get($skuProduct);
             } catch (NoSuchEntityException $error) {
-                $this->messageManager->addNoticeMessage('Товар не найден!');
+                $this->messageManager->addNoticeMessage(__('Товар не найден!'));
                 return $redirect->setPath("hamenok");
             }
 
@@ -63,9 +63,9 @@ class Add extends Action
             $quote = $this->checkoutSession->getQuote();
 
             if ($product->getTypeId()!== 'simple') {
-                $this->messageManager->addErrorMessage('Товар не добавлен! Заказывать можно только "Simple product"');
+                $this->messageManager->addErrorMessage(__('Товар не добавлен! Заказывать можно только "Simple product"'));
             } elseif ($qtyProduct > $stockQty) {
-                $this->messageManager->addErrorMessage('Товар не добавлен! Нет необходимого количества на складе!');
+                $this->messageManager->addErrorMessage(__('Товар не добавлен! Нет необходимого количества на складе!'));
             } else {
                 if (!$quote->getId()) {
                     $quote->save();
