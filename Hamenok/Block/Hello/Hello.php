@@ -1,14 +1,29 @@
 <?php
 
-
 namespace Amasty\Hamenok\Block\Hello;
 
+use Amasty\Hamenok\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
 
 class Hello extends Template
 {
-    public function sayHiTo()
+    /**
+     * @var ConfigProvider
+     */
+    private $configProvider;
+
+    public function __construct(
+        Template\Context $context,
+        ConfigProvider $configProvider,
+        array $data = []
+    )
     {
-        return 'Привет Magento. Привет Amasty. Я готов тебя покорить!';
+        parent::__construct($context, $data);
+        $this->configProvider = $configProvider;
+    }
+
+    public function getWelcomeText(): string
+    {
+        return $this->configProvider->getWelcomeMessage("general/welcome_text") ?: 'Никакого вам привета(';
     }
 }

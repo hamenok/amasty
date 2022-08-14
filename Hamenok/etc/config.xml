@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <test_config>
+            <general>
+                <enabled>1</enabled>
+                <welcome_text>Привет, Amasty! Это тестовый модуль от Виталика</welcome_text>
+                <visible_qty>1</visible_qty>
+                <default_qty>1</default_qty>
+            </general>
+        </test_config>
+    </default>
+</config>

@@ -1,15 +1,11 @@
 <?php
 /**
- * @var Timer $block
- * @var Escaper $escaper
+ * @var Amasty\Hamenok\Block\Timer\Timer $block
+ * @var Magento\Framework\Escaper $escaper
  */
-
-use Amasty\Hamenok\Block\Timer\Timer;
-use Magento\Framework\Escaper;
-
 ?>
-<div class="<?= $escaper->escapeHtml($block->getTimer()) ?>">
+<div class="<?= $escaper->escapeHtml($block->getTimer()); ?>">
     <h3>
-        <?= $block->Timer(); ?>
+        <?= $block->timer(); ?>
     </h3>
 </div>

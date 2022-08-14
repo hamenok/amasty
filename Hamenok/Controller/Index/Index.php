@@ -3,18 +3,37 @@
 namespace Amasty\Hamenok\Controller\Index;
 
 use Magento\Framework\App\ActionInterface;
+use Amasty\Hamenok\Model\ConfigProvider;
 use Magento\Framework\Controller\ResultFactory;
 
 class Index implements ActionInterface
 {
+    /**
+     * @var ResultFactory
+     */
     private $resultFactory;
-    public function __construct(ResultFactory $resultFactory)
+
+    /**
+     * @var ConfigProvider
+     */
+    private $configProvider;
+
+    public function __construct(
+        ResultFactory $resultFactory,
+        ConfigProvider $configProvider
+    )
     {
         $this->resultFactory = $resultFactory;
+        $this->configProvider = $configProvider;
     }
 
     public function execute()
     {
-        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        if ($this->configProvider->getIsEnabled("general/enabled")) {
+            return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        } else {
+            die('Sorry, module is disable');
+
+        }
     }
 }

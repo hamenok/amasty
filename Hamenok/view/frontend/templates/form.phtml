@@ -1,26 +1,30 @@
 <?php
 /**
- * @var Form $block
- * @var Escaper $escaper;
+ * @var Amasty\Hamenok\Block\Form\Form $block
+ * @var Magento\Framework\Escaper $escaper;
  */
-
-use Amasty\Hamenok\Block\Form\Form;
-use Magento\Framework\Escaper;
-
 ?>
 
 <div>
-    <form class="<?= $escaper->escapeHtml($block->getForm()) ?>">
-        <label for="sku" class="<?= $escaper->escapeHtml($block->getLabel()) ?>">
+    <form  action="<?= $block->getUrl('hamenok/cart/add'); ?>" method="GET" data-mage-init='{"validation": {}}'
+            class="<?= $escaper->escapeHtml($block->getForm()); ?> ">
+        <label for="sku" class="<?= $escaper->escapeHtml($block->getLabel()); ?>">
             Артикул
         </label>
-        <input type="text" name="sku" id="sku" class="<?= $escaper->escapeHtml($block->getInput()) ?>" />
-        <label for="qty" class="<?= $escaper->escapeHtml($block->getLabel()) ?>">
-            Количество
-        </label>
-        <input type="number" name="qty" id="qty" class="<?= $escaper->escapeHtml($block->getInput()) ?>"/>
+        <input type="text" name="sku" id="sku" class="<?= $escaper->escapeHtml($block->getInput()); ?>" data-validate='{"required":true}' />
+        <?php
+            if ($block->isEnabledQty()) {
+        ?>
+                <label for="qty" class="<?= $escaper->escapeHtml($block->getLabel()); ?>">
+                    Количество
+                </label>
+                <input type="number" name="qty" id="qty" class="<?= $escaper->escapeHtml($block->getInput()); ?> "
+                       value="<?= $block->defaultValueQty(); ?>" data-validate='{"required":true, "integer":true, "validate-zero-or-greater":true}'/>
+        <?php
+            }
+        ?>
         <?= $block->getChildHtml(); ?>
-        <button type="submit" class="<?= $escaper->escapeHtml($block->getBtn()) ?>">
+        <button type="submit" class="<?= $escaper->escapeHtml($block->getBtn()); ?>">
             Отправить
         </button>
     </form>
