@@ -12,17 +12,13 @@
             Артикул
         </label>
         <input type="text" name="sku" id="sku" class="<?= $escaper->escapeHtml($block->getInput()); ?>" data-validate='{"required":true}' />
-        <?php
-            if ($block->isEnabledQty()) {
-        ?>
+        <?php if ($block->getIsEnabledQty()): ?>
                 <label for="qty" class="<?= $escaper->escapeHtml($block->getLabel()); ?>">
                     Количество
                 </label>
                 <input type="number" name="qty" id="qty" class="<?= $escaper->escapeHtml($block->getInput()); ?> "
-                       value="<?= $block->defaultValueQty(); ?>" data-validate='{"required":true, "integer":true, "validate-zero-or-greater":true}'/>
-        <?php
-            }
-        ?>
+                       value="<?= $block->getDefaultValueQty(); ?>" data-validate='{"required":true, "integer":true, "validate-zero-or-greater":true}'/>
+        <?php endif; ?>
         <?= $block->getChildHtml(); ?>
         <button type="submit" class="<?= $escaper->escapeHtml($block->getBtn()); ?>">
             Отправить

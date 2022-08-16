@@ -4,7 +4,13 @@ namespace Amasty\Hamenok\Model;
 
 class ConfigProvider extends ConfigProviderAbstract
 {
-    protected $pathPrefix = "test_config/";
+    protected $pathPrefix = 'test_config/';
+
+    const MAIN_GROUP = 'general/';
+    const IS_ENABLE_MODULE = 'enabled';
+    const IS_ENABLE_QTY = 'visible_qty';
+    const DEFAULT_QTY_VALUE = 'default_qty';
+    const WELCOME_MESSAGE = 'welcome_text';
 
     protected function getValue(string $path)
     {
@@ -13,21 +19,26 @@ class ConfigProvider extends ConfigProviderAbstract
 
     protected function isSetFlag(string $path): bool
     {
-        return (bool) $this->scopeConfig->isSetFlag($this->pathPrefix . $path);
+        return (bool)$this->scopeConfig->isSetFlag($this->pathPrefix . $path);
     }
 
-    public function getIsEnabled(string $path): bool
+    public function getIsEnabledModule(): bool
     {
-        return $this->isSetFlag($path);
+        return (bool)$this->isSetFlag(self::MAIN_GROUP . self::IS_ENABLE_MODULE);
     }
 
-    public function getWelcomeMessage(string $path): string
+    public function getIsEnabledQty(): bool
     {
-        return $this->getValue($path);
+        return (bool)$this->isSetFlag(self::MAIN_GROUP . self::IS_ENABLE_QTY);
     }
 
-    public function getQty(string $path): int
+    public function getWelcomeMessage(): string
     {
-        return $this->getValue($path);
+        return (string)$this->getValue(self::MAIN_GROUP . self::WELCOME_MESSAGE);
+    }
+
+    public function getQty(): int
+    {
+        return (int)$this->getValue(self::MAIN_GROUP . self::DEFAULT_QTY_VALUE);
     }
 }

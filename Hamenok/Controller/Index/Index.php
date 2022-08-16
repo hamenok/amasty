@@ -29,7 +29,7 @@ class Index implements ActionInterface
 
     public function execute()
     {
-        if ($this->configProvider->getIsEnabled("general/enabled")) {
+        if ($this->configProvider->getIsEnabledModule()) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
             die('Sorry, module is disable');

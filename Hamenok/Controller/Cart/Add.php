@@ -41,41 +41,46 @@ class Add extends Action
     public function execute()
     {
         $redirect = $this->resultRedirectFactory->create();
-        if (!$this->configProvider->getIsEnabled("general/enabled")) {
-            die("Access is denied. Module is disabled");
+        if (!$this->configProvider->getIsEnabledModule()) {
+            die('Access is denied. Module is disabled');
         } else {
-            if (!$this->configProvider->getIsEnabled("general/visible_qty")) {
+            if (!$this->configProvider->getIsEnabledQty()) {
                 $this->messageManager->addWarningMessage(__('Поле "Количество" отключено! Товар не может быть добавлен'));
-                return $redirect->setPath("hamenok");
+                return $redirect->setPath('hamenok');
             }
 
-            $skuProduct = $this->getRequest()->getParam("sku");
-            $qtyProduct = $this->getRequest()->getParam("qty");
+            $skuProduct = $this->getRequest()->getParam('sku');
+            $qtyProduct = $this->getRequest()->getParam('qty');
 
             try {
-                $product = $this->productRepository->get($skuProduct);
+                if ($skuProduct == null || $qtyProduct == null) {
+                    $this->messageManager->addWarningMessage(__('Товар не добавлен! Не все поля заполнены!'));
+                    return $redirect->setPath('hamenok');
+                } else {
+                    $product = $this->productRepository->get($skuProduct);
+                }
             } catch (NoSuchEntityException $error) {
                 $this->messageManager->addNoticeMessage(__('Товар не найден!'));
-                return $redirect->setPath("hamenok");
+                return $redirect->setPath('hamenok');
             }
 
             $stockQty = $product->getExtensionAttributes()->getStockItem()->getQty();
-            $quote = $this->checkoutSession->getQuote();
 
             if ($product->getTypeId()!== 'simple') {
                 $this->messageManager->addErrorMessage(__('Товар не добавлен! Заказывать можно только "Simple product"'));
             } elseif ($qtyProduct > $stockQty) {
                 $this->messageManager->addErrorMessage(__('Товар не добавлен! Нет необходимого количества на складе!'));
             } else {
+                $quote = $this->checkoutSession->getQuote();
                 if (!$quote->getId()) {
                     $quote->save();
                 }
 
                 $quote->addProduct($product, $qtyProduct);
                 $quote->save();
-                $this->messageManager->addSuccessMessage(__("Товар добавлен в корзину!"));
+                $this->messageManager->addSuccessMessage(__('Товар добавлен в корзину!'));
             }
-            return $redirect->setPath("hamenok");
+            return $redirect->setPath('hamenok');
         }
     }
 }

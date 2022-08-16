@@ -22,13 +22,13 @@ class Form extends Template
         $this->configProvider = $configProvider;
     }
 
-    public function isEnabledQty(): bool
+    public function getIsEnabledQty(): bool
     {
-        return $this->configProvider->getIsEnabled("general/visible_qty");
+        return (bool)$this->configProvider->getIsEnabledQty();
     }
 
-    public function defaultValueQty(): int
+    public function getDefaultValueQty(): int
     {
-        return $this->configProvider->getQty("general/default_qty");
+        return (int)$this->configProvider->getQty();
     }
 }

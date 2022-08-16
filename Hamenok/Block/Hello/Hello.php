@@ -24,6 +24,6 @@ class Hello extends Template
 
     public function getWelcomeText(): string
     {
-        return $this->configProvider->getWelcomeMessage("general/welcome_text") ?: 'Никакого вам привета(';
+        return (string)$this->configProvider->getWelcomeMessage() ?: 'Никакого вам привета(';
     }
 }
