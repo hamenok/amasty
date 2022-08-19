@@ -1,0 +1,15 @@
+<div class="stopwatch">
+    <p>
+        <!--ko if: hours() < 10 -->0<!--/ko--><span data-bind="text: hours"></span>
+        :
+        <!--ko if: minutes() < 10 -->0<!--/ko--><span data-bind="text: minutes"></span>
+        :
+        <!--ko if: seconds() < 10 -->0<!--/ko--><span data-bind="text: seconds"></span>
+    </p>
+    <div class="stopwatch__btn">
+        <button id="start" data-bind="click: start.bind($data)">Старт</button>
+        <button id="stop" data-bind="click: stop.bind($data)">Стоп</button>
+        <button id="pause" data-bind="click: pause.bind($data)">Пауза</button>
+    </div>
+</div>
+

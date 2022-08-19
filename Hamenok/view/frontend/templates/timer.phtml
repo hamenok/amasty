@@ -4,8 +4,21 @@
  * @var Magento\Framework\Escaper $escaper
  */
 ?>
-<div class="<?= $escaper->escapeHtml($block->getTimer()); ?>">
-    <h3>
-        <?= $block->timer(); ?>
-    </h3>
+<div data-bind="scope: 'stopwatch'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "stopwatch": {
+                        "component": "Amasty_Hamenok/js/koStopwatch",
+                        "template": "Amasty_Hamenok/koStopwatch"
+                    }
+                }
+            }
+        }
+    }
+</script>

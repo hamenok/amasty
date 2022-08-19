@@ -8,20 +8,35 @@
 <div>
     <form  action="<?= $block->getUrl('hamenok/cart/add'); ?>" method="GET" data-mage-init='{"validation": {}}'
             class="<?= $escaper->escapeHtml($block->getForm()); ?> ">
-        <label for="sku" class="<?= $escaper->escapeHtml($block->getLabel()); ?>">
-            Артикул
-        </label>
-        <input type="text" name="sku" id="sku" class="<?= $escaper->escapeHtml($block->getInput()); ?>" data-validate='{"required":true}' />
-        <?php if ($block->getIsEnabledQty()): ?>
+        <div data-bind="scope: 'skuAutocomplete'">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+         <?php if ($block->getIsEnabledQty()): ?>
                 <label for="qty" class="<?= $escaper->escapeHtml($block->getLabel()); ?>">
                     Количество
                 </label>
                 <input type="number" name="qty" id="qty" class="<?= $escaper->escapeHtml($block->getInput()); ?> "
                        value="<?= $block->getDefaultValueQty(); ?>" data-validate='{"required":true, "integer":true, "validate-zero-or-greater":true}'/>
         <?php endif; ?>
-        <?= $block->getChildHtml(); ?>
         <button type="submit" class="<?= $escaper->escapeHtml($block->getBtn()); ?>">
             Отправить
         </button>
     </form>
 </div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "skuAutocomplete": {
+                        "component": "Amasty_Hamenok/js/koAutocomplete",
+                        "template": "Amasty_Hamenok/koAutocomplete",
+                        "classLabel": "<?= $escaper->escapeHtml($block->getLabel()); ?>",
+                        "classInput": "<?= $escaper->escapeHtml($block->getInput()); ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

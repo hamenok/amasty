@@ -20,13 +20,10 @@
                         <argument name="input" xsi:type="string">input-text</argument>
                         <argument name="btn" xsi:type="string">form__button</argument>
                     </arguments>
-                    <block name="Amasty_Hamenok.additional"
-                           class="Amasty\Hamenok\Block\Timer\Timer"
-                           template="Amasty_Hamenok::timer.phtml">
-                        <arguments>
-                            <argument name="timer" xsi:type="string">block__timer</argument>
-                        </arguments>
-                    </block>
+                </block>
+                <block name="Amasty_Hamenok.additional"
+                       class="Amasty\Hamenok\Block\Timer\Timer"
+                       template="Amasty_Hamenok::timer.phtml">
                 </block>
             </container>
         </referenceContainer>

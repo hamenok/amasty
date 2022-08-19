@@ -1,0 +1,7 @@
+<label for="sku" data-bind="class: classLabel">
+    Артикул
+</label>
+<input type="text" name="sku" id="sku" data-bind="{ class: classInput, textInput: searchText }" data-validate='{"required":true}' />
+<ul data-bind="foreach: searchResult">
+    <li ><!--ko text: $data.sku--><!--/ko-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--ko text: $data.name--><!--/ko--></li>
+</ul>

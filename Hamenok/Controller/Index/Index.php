@@ -33,7 +33,6 @@ class Index implements ActionInterface
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
             die('Sorry, module is disable');
-
         }
     }
 }
