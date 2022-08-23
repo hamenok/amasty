@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Amasty\Hamenok\Block\Form\Form">
+        <plugin name="Amasty_SecondModule::changeActionForm"
+                type="Amasty\SecondModule\Plugin\Hamenok\Block\Form\ChangeActionForm"
+                disabled="true"
+        />
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="Amasty_SecondModule::changeAddProduct"
+                type="Amasty\SecondModule\Plugin\Checkout\Controller\Cart\Add\ChangeAddProduct"
+                disabled="true"
+        />
+    </type>
+<!--    <preference for="Amasty\Hamenok\Controller\Index\Index"-->
+<!--                type="Amasty\SecondModule\Preference\Hamenok\Controller\Index\Index\ChangeExecuteAccess"-->
+<!--    />-->
+</config>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Amasty\Hamenok\Controller\Index;
 
 use Magento\Framework\App\ActionInterface;

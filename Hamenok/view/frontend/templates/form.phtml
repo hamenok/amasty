@@ -6,7 +6,7 @@
 ?>
 
 <div>
-    <form  action="<?= $block->getUrl('hamenok/cart/add'); ?>" method="GET" data-mage-init='{"validation": {}}'
+    <form  action="<?= $block->getUrl($escaper->escapeHtml($block->getFormAction())); ?>" method="POST" data-mage-init='{"validation": {}}'
             class="<?= $escaper->escapeHtml($block->getForm()); ?> ">
         <div data-bind="scope: 'skuAutocomplete'">
             <!-- ko template: getTemplate() --><!-- /ko -->

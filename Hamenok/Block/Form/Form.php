@@ -7,6 +7,8 @@ use Magento\Framework\View\Element\Template;
 
 class Form extends Template
 {
+    public const FORM_ACTION = 'hamenok/cart/add';
+
     /**
      * @var ConfigProvider
      */
@@ -30,5 +32,10 @@ class Form extends Template
     public function getDefaultValueQty(): int
     {
         return (int)$this->configProvider->getQty();
+    }
+
+    public function getFormAction(): string
+    {
+        return self::FORM_ACTION;
     }
 }
