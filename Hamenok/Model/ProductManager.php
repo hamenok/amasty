@@ -128,7 +128,7 @@ class ProductManager
                                             'Товар был добавлен в количестве: ' . $blacklistQty . ' шт.');
                     } else {
                         $this->addProductToCart($quote, $product, $summQty,
-                                            'Товар был добавлен в количестве: ' . $summQty . ' шт.'); );
+                                            'Товар был добавлен в количестве: ' . $summQty . ' шт.');
                     }
 
                 } else {
