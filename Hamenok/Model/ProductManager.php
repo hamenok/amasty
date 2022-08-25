@@ -151,7 +151,7 @@ class ProductManager
                     return;
                 } else {
                     $this->addProductToCart($quote, $product, $qtyProduct,
-                        'Товар был добавлен в количестве: ' . $qtyProduct . ' шт.');
+                                            'Товар был добавлен в количестве: ' . $qtyProduct . ' шт.');
                 }
             }
 
