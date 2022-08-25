@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Amasty\Hamenok\Model;
 
+use Amasty\Hamenok\Model\BlacklistFactory;
+use Amasty\Hamenok\Model\ResourceModel\Blacklist as BlacklistResource;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\RequestInterface;
@@ -14,6 +16,17 @@ use Magento\Framework\Message\ManagerInterface;
 class ProductManager
 {
     public const EVENT_NAME = 'amasty_hamenok_product_added_to_cart';
+    public const COLUMN_SKU = 'sku';
+
+    /**
+     * @var BlacklistFactory
+     */
+    private $blacklistFactory;
+
+    /**
+     * @var BlacklistResource
+     */
+    private $blacklistResource;
 
     /**
      * @var ProductRepositoryInterface
@@ -41,6 +54,8 @@ class ProductManager
     private $messageManager;
 
     Public function __construct(
+        BlacklistFactory $blacklistFactory,
+        BlacklistResource $blacklistResource,
         ProductRepositoryInterface $productRepository,
         Session $checkoutSession,
         ManagerInterface $messageManager,
@@ -52,6 +67,8 @@ class ProductManager
         $this->request = $request;
         $this->messageManager = $messageManager;
         $this->eventManager = $eventManager;
+        $this->blacklistFactory = $blacklistFactory;
+        $this->blacklistResource = $blacklistResource;
     }
 
     public function addProduct()
@@ -83,9 +100,44 @@ class ProductManager
                 $quote->save();
             }
 
-            $quote->addProduct($product, $qtyProduct);
-            $quote->save();
-            $this->messageManager->addSuccessMessage(__('Товар добавлен в корзину!'));
+            $blacklist = $this->blacklistFactory->create();
+            $this->blacklistResource->load(
+                $blacklist,
+                $skuProduct,
+                self::COLUMN_SKU
+            );
+
+            $blacklistQty = $blacklist->getQty();
+
+            if (count($blacklist->getData()) > 0){
+                $item = $quote->getItemByProduct($product);
+
+                if ($item)
+                {
+                    if ($item->getSku() == $skuProduct) {
+                        $summQty = $item->getQty() + $qtyProduct;
+                    } else {
+                        $summQty = $qtyProduct;
+                    }
+
+                    if ($summQty > $blacklistQty){
+                        $this->addProductToCart($quote, $product, $blacklistQty,
+                                            'Товар был добавлен в количестве: ' . $blacklistQty . ' шт.');
+                    } else {
+                        $this->addProductToCart($quote, $product, $qtyProduct, 'Товар добавлен в корзину!' );
+                    }
+
+                } else {
+                    if ($qtyProduct > $blacklistQty){
+                        $this->addProductToCart($quote, $product, $blacklistQty,
+                                            'Товар был добавлен в количестве: ' . $blacklistQty . ' шт.');
+                    } else {
+                        $this->addProductToCart($quote, $product, $qtyProduct, 'Товар добавлен в корзину!' );
+                    }
+                }
+            } else {
+                $this->addProductToCart($quote, $product, $qtyProduct, 'Товар добавлен в корзину!' );
+            }
 
             $this->eventManager->dispatch(
                 self::EVENT_NAME,
@@ -94,6 +146,13 @@ class ProductManager
                 ]
             );
         }
+    }
+
+    private function addProductToCart($quote, $product, $qty, string $msg)
+    {
+        $quote->addProduct($product, $qty);
+        $quote->save();
+        $this->messageManager->addSuccessMessage(__($msg));
     }
 }
 
