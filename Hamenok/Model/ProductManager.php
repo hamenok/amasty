@@ -117,7 +117,7 @@ class ProductManager
                     if ($item->getSku() == $skuProduct) {
                         $summQty = $item->getQty() + $qtyProduct;
                         if ($summQty > $blacklistQty) {
-                            $summQty = $blacklist - $item->getQty();
+                            $summQty = $blacklistQty - $item->getQty();
                         }
                     } else {
                         $summQty = $qtyProduct;
@@ -126,21 +126,33 @@ class ProductManager
                     if ($summQty > $blacklistQty){
                         $this->addProductToCart($quote, $product, $blacklistQty,
                                             'Товар был добавлен в количестве: ' . $blacklistQty . ' шт.');
+                    } elseif ($summQty <= 0) {
+                        $this->messageManager->addSuccessMessage(__('Товар не был добавлен!'));
+                        return;
                     } else {
                         $this->addProductToCart($quote, $product, $summQty,
                                             'Товар был добавлен в количестве: ' . $summQty . ' шт.');
                     }
-
                 } else {
                     if ($qtyProduct > $blacklistQty){
                         $this->addProductToCart($quote, $product, $blacklistQty,
                                             'Товар был добавлен в количестве: ' . $blacklistQty . ' шт.');
+                    } elseif ($qtyProduct <= 0) {
+                        $this->messageManager->addSuccessMessage(__('Товар не был добавлен!'));
+                        return;
                     } else {
-                        $this->addProductToCart($quote, $product, $qtyProduct, 'Товар добавлен в корзину!' );
+                        $this->addProductToCart($quote, $product, $qtyProduct,
+                                            'Товар был добавлен в количестве: ' . $qtyProduct . ' шт.');
                     }
                 }
             } else {
-                $this->addProductToCart($quote, $product, $qtyProduct, 'Товар добавлен в корзину!' );
+                if ($qtyProduct <= 0) {
+                    $this->messageManager->addSuccessMessage(__('Товар не был добавлен!'));
+                    return;
+                } else {
+                    $this->addProductToCart($quote, $product, $qtyProduct,
+                        'Товар был добавлен в количестве: ' . $qtyProduct . ' шт.');
+                }
             }
 
             $this->eventManager->dispatch(
