@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="amasty_hamenok_cron">
+        <job name="amasty_hamenok_notify" instance="Amasty\Hamenok\Model\SendEmail" method="Send">
+            <config_path>test_config/general/cron_schedule</config_path>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,24 @@
+<!--@subject Amasty Hamenok Blacklist QTY notification @-->
+<!--@vars {
+"var blacklist_id":"Blacklist ID",
+"var sku":"SKU Product in Blacklist",
+"var qty":"QTY for SKU in Blacklist"
+} @-->
+<!--@styles
+td { padding-right: 20px; }
+thead tr { border-bottom: 1px solid black; font-weight: bold; }
+@-->
+{{template config_path="design/email/header_template"}}
+<p>{{trans "Максимальное количество для товара, которое находится в Blacklist:" }}</p>
+<table>
+    <thead>
+        <tr>
+            <td>SKU</td>
+            <td>QTY</td>
+        </tr>
+    </thead>
+    <tbody>
+    {{layout handle="amasty_hamenok_email" sku=$sku qty=$qty area="frontend"}}
+    </tbody>
+</table>
+{{template config_path="design/email/footer_template"}}

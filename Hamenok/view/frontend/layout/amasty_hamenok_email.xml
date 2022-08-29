@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block name="Amasty_Hamenok_Blacklist"
+               class="Amasty\Hamenok\Block\Email\Blacklist"
+               template="Amasty_Hamenok::email/blacklist.phtml"
+                as="amasty_hamenok_blacklist"
+        >
+        </block>
+    </body>
+</page>

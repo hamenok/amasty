@@ -11,6 +11,8 @@ class ConfigProvider extends ConfigProviderAbstract
     const IS_ENABLE_QTY = 'visible_qty';
     const DEFAULT_QTY_VALUE = 'default_qty';
     const WELCOME_MESSAGE = 'welcome_text';
+    const EMAIL = 'email';
+    const EMAIL_TEMPLATE = 'email_template';
 
     protected function getValue(string $path)
     {
@@ -40,5 +42,15 @@ class ConfigProvider extends ConfigProviderAbstract
     public function getQty(): int
     {
         return (int)$this->getValue(self::MAIN_GROUP . self::DEFAULT_QTY_VALUE);
+    }
+
+    public function getEmail(): string
+    {
+        return (string)$this->getValue(self::MAIN_GROUP . self::EMAIL);
+    }
+
+    public function getEmailTemplate()
+    {
+        return $this->getValue(self::MAIN_GROUP . self::EMAIL_TEMPLATE);
     }
 }

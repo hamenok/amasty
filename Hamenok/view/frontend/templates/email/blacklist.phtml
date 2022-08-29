@@ -1,0 +1,11 @@
+<?php
+/** @var \Amasty\Hamenok\Block\Email\Blacklist $block */
+?>
+
+<?php $blackList = $block->getCollectionBlacklist();
+    foreach ($blackList as $items): ?>
+    <tr>
+        <td> <?= $items->getSku(); ?> </td>
+        <td> <?= $items->getQty(); ?> </td>
+    </tr>
+<?php endforeach ?>

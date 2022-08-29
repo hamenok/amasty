@@ -8,6 +8,7 @@ use Magento\Framework\App\ActionInterface;
 use Amasty\Hamenok\Model\ConfigProvider;
 use Magento\Framework\Controller\ResultFactory;
 
+
 class Index implements ActionInterface
 {
     /**
@@ -22,7 +23,7 @@ class Index implements ActionInterface
 
     public function __construct(
         ResultFactory $resultFactory,
-        ConfigProvider $configProvider
+        ConfigProvider $configProvider,
     )
     {
         $this->resultFactory = $resultFactory;
