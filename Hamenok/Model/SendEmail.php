@@ -52,25 +52,24 @@ class SendEmail
     public function Send()
     {
         $blacklist = $this->blacklistRepository->getBlacklistById(1);
-
         $vars = [
             'blacklist_id'=>$blacklist->getId(),
             'sku'=>$blacklist->getSku(),
             'qty'=>$blacklist->getQty(),
         ];
-
         $sender = [
             'name'=>'Hamenok',
             'email'=>'amasty_hamenok@gmail.com',
+        ];
+        $templateOptions = [
+            'area' => Area::AREA_FRONTEND,
+            'store' => $this->storeManager->getStore()->getId(),
         ];
 
         $this->transportBuilder->setTemplateIdentifier(
             $this->configProvider->getEmailTemplate()
         )->setTemplateOptions(
-            [
-                'area' => Area::AREA_FRONTEND,
-                'store' => $this->storeManager->getStore()->getId(),
-            ]
+            $templateOptions
         )->setTemplateVars(
             $vars
         )->setFromByScope(
@@ -79,16 +78,12 @@ class SendEmail
 
         $transport = $this->transportBuilder->getTransport();
         $transport->sendMessage();
-
         $template = $this->templateFactory->get($this->configProvider->getEmailTemplate());
-        $template->setOptions([
-            'area' => Area::AREA_FRONTEND,
-            'store' => $this->storeManager->getStore()->getId(),
-        ]);
+        $template->setOptions(
+            $templateOptions
+        );
         $body = $template->processTemplate();
-
         $blacklist->setEmailBody($body);
-
         $this->blacklistRepository->save($blacklist);
     }
 }
